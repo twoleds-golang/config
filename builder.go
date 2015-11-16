@@ -2,6 +2,8 @@ package config
 
 import "strconv"
 
+// Builder is used for generating hierarchical configuration data in memory.
+// After build is returned object which implement interface ```Config```.
 type Builder interface {
 	Bool(name string, val bool) Builder
 	CloseSection() Builder

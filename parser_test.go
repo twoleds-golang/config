@@ -1,6 +1,6 @@
 package config_test
 
-import "github.com/twoleds/config"
+import "github.com/twoleds-golang/config"
 import "testing"
 
 func TestParser(t *testing.T) {

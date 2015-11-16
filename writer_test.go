@@ -3,7 +3,7 @@ package config_test
 import "bufio"
 import "fmt"
 
-import "github.com/twoleds/config"
+import "github.com/twoleds-golang/config"
 import "io/ioutil"
 import "os"
 import "testing"

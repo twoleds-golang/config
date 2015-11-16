@@ -7,10 +7,14 @@ import "fmt"
 import "io"
 import "os"
 
+// ParseFromBytes parses and returns a hierarchical configuration data from
+// the specified slice of bytes.
 func ParseFromBytes(data []byte) (cfg Config, err error) {
 	return ParseFromReader(bytes.NewReader(data))
 }
 
+// ParseFromByteReader parses and returns a hierarchical configuration data
+// from the specified byte reader.
 func ParseFromByteReader(reader io.ByteReader) (cfg Config, err error) {
 	p := newParser(reader)
 	if err := p.parse(); err != nil {
@@ -19,6 +23,8 @@ func ParseFromByteReader(reader io.ByteReader) (cfg Config, err error) {
 	return p.config(), nil
 }
 
+// ParseFromFile parses and returns a hierarchical configuration data from
+// the specified file.
 func ParseFromFile(file string) (cfg Config, err error) {
 	r, err := os.Open(file)
 	if err != nil {
@@ -28,10 +34,14 @@ func ParseFromFile(file string) (cfg Config, err error) {
 	return ParseFromReader(r)
 }
 
+// ParseFromReader parses and returns a hierarchical configuration data from
+// the specified reader.
 func ParseFromReader(reader io.Reader) (cfg Config, err error) {
 	return ParseFromByteReader(bufio.NewReader(reader))
 }
 
+// ParseFromString parses and returns a hierarchical configuration data from
+// the specified string.
 func ParseFromString(str string) (cfg Config, err error) {
 	return ParseFromBytes([]byte(str))
 }
@@ -162,7 +172,7 @@ func (this *parser) parse() error {
 				this.state = parserValueEnd
 			} else if (b == '\\' && this.lastByte == '\\') || (b != '\\') {
 				this.bufValue = append(this.bufValue, b)
-				fmt.Println(string(this.bufValue))
+				//fmt.Println(string(this.bufValue))
 			}
 			this.lastByte = b
 		case parserValueEnd:
@@ -177,7 +187,9 @@ func (this *parser) parse() error {
 				this.bufValue = this.bufValue[:0]
 				this.state = parserBegin
 			} else if b == '{' {
-				this.builder.Section(string(this.bufName), "")
+				this.builder.Section(string(this.bufName), string(this.bufValue))
+				this.bufName = this.bufName[:0]
+				this.bufValue = this.bufValue[:0]
 				if err = this.parse(); err != nil {
 					return err
 				}

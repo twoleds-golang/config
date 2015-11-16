@@ -5,6 +5,7 @@ import "io"
 import "strconv"
 import "strings"
 
+// Writer is used for writing hierarchical configuration data to files.
 type Writer interface {
 	Bool(name string, val bool) Writer
 	CloseSection() Writer
