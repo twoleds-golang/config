@@ -2,6 +2,8 @@
 
 Library for reading and writing hierarchical configuration data.
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/twoleds-golang/config)
+
 ## Release
 
 This library is not ready for production usage. It works, but 
